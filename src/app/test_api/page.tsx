@@ -1,24 +1,24 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import UserRegistrationForm from "@/components/UserRegistrationForm";
+import TestingAPI from "@/components/test";
 import { useEffect } from "react";
 
-const PremiumPage = async () => {
+const TestPage = () => {
 
   const { push } = useRouter();
 
   useEffect(() => {
     const session: Storage = window.localStorage
-    !session.isLoggedIn ? push('/') : null
+    typeof session.getItem('token') === 'string' ? null : push('/login')
   }, [])
 
   return (
     <div className="create_teacher">
-      <h1>Создайте аккаунт для преподавателя</h1>
-      <UserRegistrationForm/>
+      <h1>Протестируйте нашу API</h1>
+      <TestingAPI/>
     </div>
   );
 };
 
-export default PremiumPage;
+export default TestPage;

@@ -8,9 +8,12 @@ import { Context } from "@/context";
 const LogoutForm = () => {
 
    const { setIsLoggedIn } = useContext(Context)
-  return (
-    <form action={() => setIsLoggedIn(false)}> //todo
-      <button  className={styles.link}>Выйти</button>
+  return ( //todo
+    <form action={() => {
+      setIsLoggedIn(false)
+      window.localStorage.clear()}
+      }>
+      <button  className={styles.button}>Выйти</button>
     </form>
   )
 }

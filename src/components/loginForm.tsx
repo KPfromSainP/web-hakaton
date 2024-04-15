@@ -31,8 +31,6 @@ const LoginForm = () => {
       });
 
       let response_json = await response.json()
-
-      console.log(response)
       
       setFormState(false)
             if (response.status == 422){
@@ -57,7 +55,7 @@ const LoginForm = () => {
     <form action={formAction}>
       <input type="email" name="email" required placeholder="Email" />
       <input type="password" name="password" required placeholder="Пароль"/>
-      <button type="submit">Войти</button>
+      <button type="submit" style={{color:'black'}}>Войти</button>
       {state?.error && <p>{state.error}</p>}
     </form>
   );

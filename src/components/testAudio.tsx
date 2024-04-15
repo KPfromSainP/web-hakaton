@@ -1,0 +1,53 @@
+"use client"
+
+import { useState } from "react";
+import { useFormState } from "react-dom"
+
+
+const TestingAudioAPI = () => {
+
+    async function handleSubmit(prevState: { error: undefined | string }, formData: FormData) {
+
+        if (!file){
+            alert("Файл не выбран")
+            return
+        }
+
+        const formData2 = new FormData();
+        formData2.append('file', file);
+
+
+        let response = await fetch(`http://127.0.0.1:8000/model/audioFilter?type=blur`, {
+            method: 'POST',
+            headers: {
+                'X-API-Key': formData.get("token_id"),
+                'Content-Type': 'multipart/form-data'
+            },
+            body: formData2
+        });
+        let answer = await response.json();
+        setText(answer['_file'])
+    }
+
+    function handleChange(e: any) {
+        setFile(e.target.files[0])
+    }
+
+    const [state, formAction] = useFormState<any, FormData>(handleSubmit, undefined);
+    const [file, setFile] = useState('');
+    const [text, setText] = useState('');
+
+    return (
+        <form action={formAction}>
+            <input type="password" name="token_id" required placeholder="Токен" />
+
+            <input type="file" name="audio" onChange={handleChange}/>
+
+            <button type="submit">Отправить</button>
+            <div style={{ overflow: 'hidden' }}>{text}</div>
+            {state?.error && <p>{state.error}</p>}
+        </form>
+    )
+}
+
+export default TestingAudioAPI

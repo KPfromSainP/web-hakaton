@@ -1,7 +1,9 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
 
 body {
   background-color: #131c2f;
@@ -53,19 +55,24 @@ nav a:hover {
 button {
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 500;
   background-color: #eee;
-  color: black;
+  color: rgb(255, 255, 255);
   padding: 2px 4px;
   border-radius: 3px;
   transition: all 0.3s ease;
-  width: 5em;
   align-items: center;
 }
 
+textarea {
+  resize: none;
+  height: 200px;
+  font-size: medium;
+ }
+
 button:hover {
-  background-color: #555;
+  font-size: 500;
   color: #fff;
   scale: 1.05;
 }
