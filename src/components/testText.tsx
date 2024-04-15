@@ -7,15 +7,21 @@ import { useFormState } from "react-dom"
 const TestingTextAPI = () => {
 
     async function handleSubmit( prevState: { error: undefined | string }, formData: FormData ) {
-        let response = await fetch(`http://127.0.0.1:8000/model/textFilter?promt=${formData.get("text")}`, {
+        const requestHeaders: HeadersInit = new Headers();
+        requestHeaders.set('Content-Type', 'application/json');
+        requestHeaders.set('X-API-Key', encodeURI(formData.get("token_id") as string));
+        let response = await fetch(`http://127.0.0.1:8000/model/textFilter?data=${formData.get("text")}`, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'X-API-Key': formData.get("token_id")
-            },
+            headers: requestHeaders
         });
         let answer = await response.json();
-        setText(answer)
+        console.log(answer)
+        if (typeof answer === 'string') {
+            setText(answer)
+        }
+        else {
+            setText('Неверный токен')
+        }      
 
     }
 

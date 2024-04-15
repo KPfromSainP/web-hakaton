@@ -17,13 +17,13 @@ const TestingVideoAPI = () => {
         formData2.append('file', file);
         formData2.append('type', 'blur');
 
+        const requestHeaders: HeadersInit = new Headers();
+        requestHeaders.set('Content-Type', 'application/json');
+        requestHeaders.set('X-API-Key', encodeURI(formData.get("token_id") as string));
 
         let response = await fetch(`http://127.0.0.1:8000/model/videoFilter?type=blur`, {
             method: 'POST',
-            headers: {
-                'X-API-Key': formData.get("token_id"),
-                'Content-Type': 'undefined'
-            },
+            headers: requestHeaders,
             body: formData2
         });
         let answer = await response.json();
