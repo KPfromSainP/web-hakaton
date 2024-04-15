@@ -6,7 +6,7 @@ import { useFormState } from "react-dom"
 
 const TestingTextAPI = () => {
 
-    async function handleSubmit( prevState: { error: undefined | string }, formData: FormData ) {
+    async function handleSubmit(prevState: { error: undefined | string }, formData: FormData) {
         const requestHeaders: HeadersInit = new Headers();
         requestHeaders.set('Content-Type', 'application/json');
         requestHeaders.set('X-API-Key', encodeURI(formData.get("token_id") as string));
@@ -21,23 +21,23 @@ const TestingTextAPI = () => {
         }
         else {
             setText('Неверный токен')
-        }      
+        }
 
     }
 
     const [state, formAction] = useFormState<any, FormData>(handleSubmit, undefined);
     const [text, setText] = useState('');
 
-  return (
-    <form action={formAction}>
-        <input type="password" name="token_id" required placeholder="Токен" />
+    return (
+        <form action={formAction}>
+            <input type="password" name="token_id" required placeholder="Токен" />
 
-        <textarea name="text"></textarea>
+            <textarea name="text"></textarea>
 
-        <button type="submit">Отправить</button>
-        <div style={{overflow:'hidden'}}>{text}</div>
-        {state?.error && <p>{state.error}</p>}
-    </form>
+            <button type="submit">Отправить</button>
+            <div style={{ overflow: 'hidden' }}>{text}</div>
+            {state?.error && <p>{state.error}</p>}
+        </form>
     )
 }
 

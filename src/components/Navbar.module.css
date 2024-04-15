@@ -3,6 +3,7 @@
     transition: all 0.4s ease-in-out;
     border-radius: 5px;
 }
+
 /*.link:hover {
     background-color: #e8be08;
 }*/
@@ -10,7 +11,5 @@
 .button {
     background-color: #131c2f00;
     transition: all 0.4s ease-in-out;
-    border: none;    
+    border: none;
 }
-
-

@@ -10,13 +10,13 @@ const RegistrationPage = () => {
 
   useEffect(() => {
     const session: Storage = window.localStorage
-    session.getItem('token') === 'string' ? push('/') : null 
+    session.getItem('token') === 'string' ? push('/') : null
   }, [])
 
   return (
     <div className="create_teacher">
       <h1>Создайте аккаунт</h1>
-      <UserRegistrationForm/>
+      <UserRegistrationForm />
     </div>
   );
 };

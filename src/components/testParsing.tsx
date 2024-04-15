@@ -12,7 +12,7 @@ const TestingParsingAPI = () => {
         requestHeaders.set('X-API-Key', encodeURI(formData.get("token_id") as string));
         let response = await fetch(`http://127.0.0.1:8000/model/journalCommentsFilter?path=${formData.get("ref")}&type=blur`, {
             method: 'POST',
-            headers:  requestHeaders,
+            headers: requestHeaders,
         });
         let answer = await response.json();
         setText(answer)

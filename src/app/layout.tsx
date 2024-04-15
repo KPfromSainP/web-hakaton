@@ -25,7 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           setIsLoggedIn
         }}>
           <div className="container">
-            <Navbar isLoggedIn={isLoggedIn}/>
+            <Navbar isLoggedIn={isLoggedIn} />
             <div className="content">{children}</div>
           </div>
         </Context.Provider>

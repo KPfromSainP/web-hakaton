@@ -8,7 +8,7 @@ const TestingVideoAPI = () => {
 
     async function handleSubmit(prevState: { error: undefined | string }, formData: FormData) {
 
-        if (!file){
+        if (!file) {
             alert("Файл не выбран")
             return
         }
@@ -42,7 +42,7 @@ const TestingVideoAPI = () => {
         <form action={formAction}>
             <input type="password" name="token_id" required placeholder="Токен" />
 
-            <input type="file" name="video" onChange={handleChange}/>
+            <input type="file" name="video" onChange={handleChange} />
 
             <button type="submit">Отправить</button>
             <div style={{ overflow: 'hidden' }}>{text}</div>

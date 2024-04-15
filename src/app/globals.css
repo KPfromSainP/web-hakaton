@@ -48,7 +48,8 @@ nav a:hover {
   text-align: center;
   margin: 0 auto;
 }
-.home p{
+
+.home p {
   text-align: center;
 }
 
@@ -69,7 +70,7 @@ textarea {
   resize: none;
   height: 200px;
   font-size: medium;
- }
+}
 
 button:hover {
   font-size: 500;
@@ -89,7 +90,7 @@ button:hover {
   text-align: center;
 }
 
-.create_teacher form{
+.create_teacher form {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -97,7 +98,7 @@ button:hover {
   margin: 0 auto;
 }
 
-.create_teacher button{
+.create_teacher button {
   margin: 0 auto;
 }
 
@@ -113,7 +114,7 @@ li {
   text-align: center;
 }
 
-li > a {
+li>a {
   margin: 0 auto;
 }
 
@@ -154,7 +155,8 @@ b {
   flex-direction: column;
   gap: 20px;
 }
-.login button{
+
+.login button {
   margin: 0 auto;
 }
 
