@@ -31,12 +31,12 @@ const TestingAPI = ({isLoggedIn}:any) => {
         <div>
             <TestingTextAPI />
         </div>
-        <div>
+        {/* <div>
             <TestingVideoAPI />
         </div>
         <div>
             <TestingAudioAPI />
-        </div>
+        </div> */}
     </div>
     )
 }
