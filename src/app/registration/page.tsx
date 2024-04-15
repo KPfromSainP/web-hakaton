@@ -10,7 +10,7 @@ const RegistrationPage = () => {
 
   useEffect(() => {
     const session: Storage = window.localStorage
-    session.isLoggedIn ? push('/') : null
+    session.getItem('token') === 'string' ? push('/') : null 
   }, [])
 
   return (

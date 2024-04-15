@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
+import { useRouter } from "next/navigation";
 
 
 async function getTokens(token_type: string | null, token: string | null) {
@@ -17,18 +18,32 @@ async function getTokens(token_type: string | null, token: string | null) {
 }
 
 const TokensPage = () => {
-  const [tokens, setTokens] = useState([])
-  const [userToken, setUserToken] = useState()
-  const [userTokenType, setUserTokenType] = useState()
 
-  const [createToken, setCreatetoken] = useState()
+   const { push } = useRouter();
+
+  const [tokens, setTokens] = useState([])
+  const [userToken, setUserToken] = useState(null)
+  const [userTokenType, setUserTokenType] = useState(null)
+
+  const [createToken, setCreatetoken] = useState<boolean>()
 
   useEffect(() => {
     const session: Storage = window.localStorage
-    setUserToken(session.getItem('token'))
-    setUserTokenType(session.getItem('token_type'))
+    if (typeof session.getItem('token') === 'string') {   
+      setUserToken(session.getItem('token'))
+      setUserTokenType(session.getItem('token_type'))
 
-    getTokens(session.getItem('token'), session.getItem('token_type')).then(val => setTokens(val))
+      console.log(userToken)
+      console.log(userTokenType)
+
+      getTokens(session.getItem('token_type'), session.getItem('token')).then(val => setTokens(val))
+      console.log(tokens)
+
+    }
+    else{
+      push('/login')
+    }
+
   }, [])
 
   const handleClick = (e:any) => {
@@ -42,25 +57,17 @@ const TokensPage = () => {
   };
 
   const handleDelete = async (id : string) => {
-    let response = await fetch('http://127.0.0.1:8000/tokens/', {
-      method: 'GET',
+    let response = await fetch(`http://127.0.0.1:8000/tokens/${id}`, {
+      method: 'DELETE',
       headers: {
         'Accept': 'application/json',
-        'Authorization': `${token_type} ${token}`
+        'Authorization': `${userTokenType} ${userToken}`
       },
       cache: "reload",
-    }); 
+    });
+    getTokens(userTokenType, userToken).then(val => setTokens(val))
   } //todo допилить удаление кнопки
 
-  const tokens_list = tokens.map((token) => {
-    return (
-      <li key={token['id']} style={{listStyleType: 'none', display: 'inline'}}>
-          <p>{token['name']} - </p>
-          <div className="hideToken" onClick={handleClick}>{token['token']}</div>
-          <div className="delete_token" onClick={handleClick}>{token['token']}</div>
-      </li>
-  )
-  })
 
   async function create_token( prevState: { error: undefined | string }, formData: FormData ) {
     const formName = formData.get("name") as string;
@@ -74,6 +81,7 @@ const TokensPage = () => {
       },
       body: JSON.stringify({"name": formName})
     });
+    getTokens(userTokenType, userToken).then(val => setTokens(val))
   }
 
   const [state, formAction] = useFormState<any, FormData>(create_token, undefined);
@@ -81,10 +89,17 @@ const TokensPage = () => {
   return (
     <div className="table_of">
 
-      <button></button>
+      <button style={{width:'150px'}} onClick={() => {setCreatetoken(true)}}>Создайте токен</button>
       {createToken && <form action={formAction}> <input type="text" name="name" required placeholder="Название токена" /><input type="submit" /></form>}
       <ul>
-        {tokens_list}
+        {tokens.map((token) => {
+        return (
+          <li key={token['id']} style={{listStyleType: 'none', display: 'flex'}}>
+              <p>{token['name']} - </p>
+              <div className="hideToken" onClick={handleClick}>{token['token']}</div>
+              <div className="delete_token" onClick={()=>handleDelete(token['id'])}> &nbsp;  Удалить токен</div>
+          </li>
+        )})}
       </ul>
     </div>
   );

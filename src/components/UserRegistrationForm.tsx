@@ -27,7 +27,7 @@ const UserRegistrationForm = () => {
         'password': formPassword,
       };
 
-      let response = await fetch('http://127.0.0.1:8000/teachers/', {
+      let response = await fetch('http://127.0.0.1:8000/users/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +36,6 @@ const UserRegistrationForm = () => {
         body: JSON.stringify(user)
       });      
       setFormState(false)
-      console.log(response)
       if (response.status == 422){
         return { error: "Неверный формат почты" };
       }
@@ -55,7 +54,7 @@ const UserRegistrationForm = () => {
       <input type="text" name="surname" required placeholder="Фамилия" />
       <input type="email" name="email" required placeholder="Email" />
       <input type="password" name="password" required placeholder="Пароль" />
-      <button>Войти</button>
+      <button  style={{color:'black'}}>Зарегестрироваться</button>
       {state?.error && <p>{state.error}</p>}
     </form>
   );

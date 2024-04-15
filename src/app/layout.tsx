@@ -15,7 +15,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
   useEffect(() => {
     const session: Storage = window.localStorage
-    setIsLoggedIn(session.getItem('access_token') ? true : false)
+    setIsLoggedIn(typeof session.getItem('token') === 'string' ? true : false)
   }, [])
 
   return (
