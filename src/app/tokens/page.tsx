@@ -22,16 +22,16 @@ const TokensPage = () => {
    const { push } = useRouter();
 
   const [tokens, setTokens] = useState([])
-  const [userToken, setUserToken] = useState(null)
-  const [userTokenType, setUserTokenType] = useState(null)
+  const [userToken, setUserToken] = useState('')
+  const [userTokenType, setUserTokenType] = useState('')
 
   const [createToken, setCreatetoken] = useState<boolean>()
 
   useEffect(() => {
     const session: Storage = window.localStorage
     if (typeof session.getItem('token') === 'string') {   
-      setUserToken(session.getItem('token'))
-      setUserTokenType(session.getItem('token_type'))
+      setUserToken(session.getItem('token')!)
+      setUserTokenType(session.getItem('token_type')!)
 
       console.log(userToken)
       console.log(userTokenType)
