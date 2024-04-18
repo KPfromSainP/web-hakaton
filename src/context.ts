@@ -4,4 +4,4 @@ type cont = {
     setIsLoggedIn: Dispatch<SetStateAction<boolean>>
 }
 
-export const Context = React.createContext<any>(null)
+export const Context = React.createContext<any>(null) //TODO any

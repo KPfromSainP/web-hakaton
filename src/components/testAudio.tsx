@@ -8,7 +8,7 @@ const TestingAudioAPI = () => {
 
     async function handleSubmit(prevState: { error: undefined | string }, formData: FormData) {
 
-        if (!file){
+        if (!file) {
             alert("Файл не выбран")
             return
         }
@@ -16,13 +16,14 @@ const TestingAudioAPI = () => {
         const formData2 = new FormData();
         formData2.append('file', file);
 
+        const requestHeaders: HeadersInit = new Headers();
+        requestHeaders.set('Content-Type', 'application/json');
+        requestHeaders.set('X-API-Key', encodeURI(formData.get("token_id") as string));
+
 
         let response = await fetch(`http://127.0.0.1:8000/model/audioFilter?type=blur`, {
             method: 'POST',
-            headers: {
-                'X-API-Key': formData.get("token_id"),
-                'Content-Type': 'multipart/form-data'
-            },
+            headers: requestHeaders,
             body: formData2
         });
         let answer = await response.json();
@@ -41,7 +42,7 @@ const TestingAudioAPI = () => {
         <form action={formAction}>
             <input type="password" name="token_id" required placeholder="Токен" />
 
-            <input type="file" name="audio" onChange={handleChange}/>
+            <input type="file" name="audio" onChange={handleChange} />
 
             <button type="submit">Отправить</button>
             <div style={{ overflow: 'hidden' }}>{text}</div>

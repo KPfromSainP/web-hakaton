@@ -16,7 +16,7 @@ const TestPage = () => {
   return (
     <div className="create_teacher">
       <h1>Протестируйте нашу API</h1>
-      <TestingAPI/>
+      <TestingAPI />
     </div>
   );
 };

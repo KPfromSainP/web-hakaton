@@ -12,9 +12,9 @@ const LoginForm = () => {
 
   const { setIsLoggedIn } = useContext(Context)
 
-    const { push } = useRouter();
-  
-  async function handleSubmit( prevState: { error: undefined | string }, formData: FormData ) {
+  const { push } = useRouter();
+
+  async function handleSubmit(prevState: { error: undefined | string }, formData: FormData) {
     if (!formState) {
       setFormState(true)
 
@@ -31,9 +31,9 @@ const LoginForm = () => {
       });
 
       let response_json = await response.json()
-      
+
       setFormState(false)
-            if (response.status == 422){
+      if (response.status == 422) {
         return { error: "Неверный формат почты" };
       }
       else if (response.status != 200) {
@@ -50,12 +50,12 @@ const LoginForm = () => {
   }
 
   const [state, formAction] = useFormState<any, FormData>(handleSubmit, undefined);
-  
+
   return (
     <form action={formAction}>
       <input type="email" name="email" required placeholder="Email" />
-      <input type="password" name="password" required placeholder="Пароль"/>
-      <button type="submit" style={{color:'black'}}>Войти</button>
+      <input type="password" name="password" required placeholder="Пароль" />
+      <button type="submit" style={{ color: 'black' }}>Войти</button>
       {state?.error && <p>{state.error}</p>}
     </form>
   );

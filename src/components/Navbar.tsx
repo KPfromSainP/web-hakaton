@@ -4,7 +4,7 @@ import Link from "next/link"
 import LogoutForm from "./logoutForm"
 import styles from './Navbar.module.css'
 
-const Navbar = ({isLoggedIn}:any) => {
+const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <nav>

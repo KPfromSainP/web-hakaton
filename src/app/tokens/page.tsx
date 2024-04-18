@@ -19,19 +19,19 @@ async function getTokens(token_type: string | null, token: string | null) {
 
 const TokensPage = () => {
 
-   const { push } = useRouter();
+  const { push } = useRouter();
 
   const [tokens, setTokens] = useState([])
-  const [userToken, setUserToken] = useState(null)
-  const [userTokenType, setUserTokenType] = useState(null)
+  const [userToken, setUserToken] = useState('')
+  const [userTokenType, setUserTokenType] = useState('')
 
   const [createToken, setCreatetoken] = useState<boolean>()
 
   useEffect(() => {
     const session: Storage = window.localStorage
-    if (typeof session.getItem('token') === 'string') {   
-      setUserToken(session.getItem('token'))
-      setUserTokenType(session.getItem('token_type'))
+    if (typeof session.getItem('token') === 'string') {
+      setUserToken(session.getItem('token')!)
+      setUserTokenType(session.getItem('token_type')!)
 
       console.log(userToken)
       console.log(userTokenType)
@@ -40,13 +40,13 @@ const TokensPage = () => {
       console.log(tokens)
 
     }
-    else{
+    else {
       push('/login')
     }
 
   }, [])
 
-  const handleClick = (e:any) => {
+  const handleClick = (e: any) => {
     var foo = document.getElementsByClassName('hideToken');
 
     for (var i = 0; i < foo.length; i++) {
@@ -56,7 +56,7 @@ const TokensPage = () => {
     e.currentTarget.classList.add("active");
   };
 
-  const handleDelete = async (id : string) => {
+  const handleDelete = async (id: string) => {
     let response = await fetch(`http://127.0.0.1:8000/tokens/${id}`, {
       method: 'DELETE',
       headers: {
@@ -69,7 +69,7 @@ const TokensPage = () => {
   } //todo допилить удаление кнопки
 
 
-  async function create_token( prevState: { error: undefined | string }, formData: FormData ) {
+  async function create_token(prevState: { error: undefined | string }, formData: FormData) {
     const formName = formData.get("name") as string;
 
     const response = await fetch('http://127.0.0.1:8000/tokens/', {
@@ -79,7 +79,7 @@ const TokensPage = () => {
         'Authorization': `${userTokenType} ${userToken}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({"name": formName})
+      body: JSON.stringify({ "name": formName })
     });
     getTokens(userTokenType, userToken).then(val => setTokens(val))
   }
@@ -89,17 +89,18 @@ const TokensPage = () => {
   return (
     <div className="table_of">
 
-      <button style={{width:'150px'}} onClick={() => {setCreatetoken(true)}}>Создайте токен</button>
+      <button style={{ width: '150px' }} onClick={() => { setCreatetoken(true) }}>Создайте токен</button>
       {createToken && <form action={formAction}> <input type="text" name="name" required placeholder="Название токена" /><input type="submit" /></form>}
       <ul>
         {tokens.map((token) => {
-        return (
-          <li key={token['id']} style={{listStyleType: 'none', display: 'flex'}}>
+          return (
+            <li key={token['id']} style={{ listStyleType: 'none', display: 'flex' }}>
               <p>{token['name']} - </p>
               <div className="hideToken" onClick={handleClick}>{token['token']}</div>
-              <div className="delete_token" onClick={()=>handleDelete(token['id'])}> &nbsp;  Удалить токен</div>
-          </li>
-        )})}
+              <div className="delete_token" onClick={() => handleDelete(token['id'])}> &nbsp;  Удалить токен</div>
+            </li>
+          )
+        })}
       </ul>
     </div>
   );
